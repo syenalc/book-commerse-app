@@ -64,15 +64,15 @@ export default async function Home() {
 
 
   const session= await getServerSession(nextAuthOptions);
-  const user:any = session?.user as User;
+  const user = session?.user as User;
 
-  let purchaseBookIds:any;
+  let purchaseBookIds:string[]=[];
 
-  if(user && user.id){
+  if(user){
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`,
       {cache: "no-store"} //SSR
-    )
+    );
     const purchasesData=await response.json();
     console.log(purchasesData);
 
@@ -88,8 +88,10 @@ export default async function Home() {
           Book Commerce
         </h2>
         {contents.map((book:BookType) => (
-          <Book key={book.id} book={book} 
-          isPurchased={purchaseBookIds.includes(book.id)}/>
+          <Book 
+            key={book.id} 
+            book={book} 
+            isPurchased={purchaseBookIds.includes(book.id)}/>
         ))}
       </main>
     </>
