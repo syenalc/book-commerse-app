@@ -68,7 +68,7 @@ export default async function Home() {
 
   let purchaseBookIds:any;
 
-  if(user){
+  if(user && user.id){
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`,
       {cache: "no-store"} //SSR
